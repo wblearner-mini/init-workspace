@@ -57,6 +57,28 @@ init-workspace/
 
 ## 安装
 
+### 方式一：用 `npx skills` 安装（推荐）
+
+[Skills CLI](https://github.com/vercel-labs/skills) 可以直接从 GitHub 安装，并按提示选择要装到哪些 Agent（如 Claude Code、Codex）：
+
+```bash
+npx skills add wblearner-mini/init-workspace
+```
+
+加上 `-g` 安装到用户级（所有项目可用），加上 `-y` 跳过确认提示：
+
+```bash
+npx skills add wblearner-mini/init-workspace -g -y
+```
+
+以后更新到最新版本：
+
+```bash
+npx skills update
+```
+
+### 方式二：手动安装
+
 把整个 `init-workspace` 目录放到你所用工具的技能目录下：
 
 | 工具 | 用户级（所有项目可用） | 项目级（仅当前项目） |

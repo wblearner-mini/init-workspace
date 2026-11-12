@@ -1,6 +1,6 @@
 ---
 name: init-workspace
-description: First-time setup of working documents (project background, current progress, file navigation) and a project-level AGENTS.md for a long-running project, so any later chat or agent can pick up where the last one left off. Works for empty folders and existing projects, e.g. "organize this workspace so I can keep working on it later" (「帮我整理这个工作区，方便以后接着做」) or "first time opening this folder, set up working docs for it". Invoke explicitly with /init-workspace in Claude Code or $init-workspace in Codex. Takes a read-only inventory and proposes a file list first; writes only after the user confirms. For a plain codebase summary, use Claude Code's built-in /init instead. Not for routine progress updates or one-off file tidying.
+description: First-time setup of working documents (project background, current progress, file navigation) and a project-level AGENTS.md for a long-running project, so any later chat or agent can pick up where the last one left off. Works for empty folders and existing projects, e.g. "organize this workspace so I can keep working on it later" or "first time opening this folder, set up working docs for it". Invoke explicitly with /init-workspace in Claude Code or $init-workspace in Codex. Takes a read-only inventory and proposes a file list first; writes only after the user confirms. For a plain codebase summary, use Claude Code's built-in /init instead. Not for routine progress updates or one-off file tidying.
 ---
 
 # Initialize Workspace
@@ -43,7 +43,7 @@ Write new documents from the skeletons in the [document templates](references/te
 **Progress maintenance rules.** When the project has no established rules, use these defaults:
 - Current progress keeps the 5 most recent entries, one per work session, newest first.
 - When there are more than 5, move the entries that drop off to the top of the history file, so the history also stays newest first.
-- Archive directory: if the workspace uses numbered directories (such as `01_sources`, `02_drafts`), name it according to that numbering scheme; otherwise use an unnumbered directory (`archive/progress-history.md` in an English workspace, `历史归档/进度历史.md` in a Chinese one).
+- Archive directory: if the workspace uses numbered directories (such as `01_sources`, `02_drafts`), name it according to that numbering scheme; otherwise use an unnumbered directory (see "Progress history" under default file names in the [document templates](references/templates.md)).
 - Create the archive directory and history file only when the first entry is moved.
 
 Follow existing conventions when there are any, and the user's instructions when they ask for something else. Write the final rules into `AGENTS.md`, including this update rule by default: before each work session ends, update current progress with what changed, what it was based on, what is still missing, and what comes next, and archive old entries according to the retention rule.
