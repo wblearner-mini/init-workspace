@@ -1,73 +1,73 @@
-# 工作区场景示例
+# Workspace Scenario Examples
 
-先按目录现状判断能复用什么，再选最贴合的项目场景。一个项目可以结合多个示例。下列内容用于拟定清单，第一轮保持只读。
+First decide what can be reused based on the current state of the directory, then pick the project scenario that fits best. One project can combine several examples. Use this material to draft the list; the first round stays read-only.
 
-## 按目录现状选做法
+## By the current state of the directory
 
-- **空目录**。「这个文件夹以后用来写毕业论文，先帮我搭好。」按用户已说明的目标提议背景、进度、导航和规则。首轮进度记录本次初始化及下一步。需要明确用途才能列清单时，只问一个问题。
-- **文件少，已有 README**。「这个小工具要长期维护，说明都在 README。」优先提议沿用 README 做导航，单独维护背景和进度。
-- **已有规则和记录**。「这个项目有自己的规则，帮我把工作文档补齐。」列出已有规则、背景和进度中哪些可沿用。已有保留期限或命名约定时按现行约定。资料出现两个互相冲突的版本时，在清单中问清以后以哪份为准。
-- **已有 CLAUDE.md，但没有 AGENTS.md**。「这个项目之前一直用 Claude Code，规则都写在 CLAUDE.md 里。」把现有 `CLAUDE.md` 视为已承担项目规则的文件，不搬动也不改写其中内容。新建 `AGENTS.md` 只写尚未覆盖的部分（指向背景和进度、文档更新规则），并在 `CLAUDE.md` 开头追加 `@AGENTS.md`。两边内容有重复或冲突时，在清单中列出并问清以哪份为准。
-- **多个项目共用一个父目录**。「这个文件夹里有好几个项目，帮我都整理一下。」先问清这次的目标是父目录本身还是其中某个子项目。以父目录为目标时，只建总导航和各项目共用的规则，每个子项目的背景和进度留在子项目目录中各自维护，不合并到父目录。子项目已有自己的 `AGENTS.md` 或 `CLAUDE.md` 时，父目录的规则不得与之冲突。
+- **Empty directory.** "This folder is for my graduation thesis from now on. Set it up for me." Based on the goal the user stated, propose background, progress, navigation, and rules. The first progress entry records this initialization and the next step. If the purpose must be clear before you can draft the list, ask only one question.
+- **Few files, with an existing README.** "This little tool needs long-term maintenance, and everything is explained in the README." Prefer reusing the README for navigation, and maintain background and progress separately.
+- **Existing rules and records.** "This project has its own rules. Fill in the missing working documents." List which existing rules, background, and progress can be reused. Follow current conventions for retention periods or naming. When the material contains two conflicting versions, ask in the list which one should be treated as authoritative from now on.
+- **Has a CLAUDE.md, but no AGENTS.md.** "This project has always used Claude Code, and the rules are all in CLAUDE.md." Treat the existing `CLAUDE.md` as the file already filling the project rules role, and do not move or rewrite its contents. Create an `AGENTS.md` covering only what is missing (pointers to background and progress, the document update rules), and add `@AGENTS.md` at the top of `CLAUDE.md`. When the two overlap or conflict, list it in the list and ask which one is authoritative.
+- **Several projects under one parent directory.** "This folder has several projects in it. Organize all of them." First ask whether the target this time is the parent directory itself or one of the subprojects. When the target is the parent directory, create only an overall navigation document and the rules shared by all projects. Keep each subproject's background and progress in that subproject's own directory, maintained separately, and do not merge them into the parent directory. When a subproject already has its own `AGENTS.md` or `CLAUDE.md`, the parent directory's rules must not conflict with it.
 
-## 按项目用途选做法
+## By the project's purpose
 
-### 1. 学术研究与论文
+### 1. Academic research and theses
 
-> 学校模板、文献和开题草稿都在这里，我要继续推进毕业论文。
+> The school template, literature, and proposal draft are all here. I want to keep pushing my graduation thesis forward.
 
-保留原始资料和草稿结构，导航链接模板、文献和当前稿件。需要跟踪引用或复现实验时，提出文献索引或实验记录。在 `AGENTS.md` 写明结论需要哪些依据，如学校文件位置、文献引用或已有实验结果。可问「哪些要求是学校正式规定，哪些是导师建议？」
+Keep the original material and the draft's structure, and link the template, literature, and current draft from navigation. When citations need tracking or experiments need to be reproducible, propose a literature index or an experiment log. In `AGENTS.md`, state what evidence conclusions need, such as the location of school documents, literature citations, or existing experiment results. A possible question: "Which requirements are official school rules, and which are your advisor's suggestions?"
 
-### 2. 软件开发与维护
+### 2. Software development and maintenance
 
-> 我接手了一个 Android 项目，已经有 README 和构建说明，帮我整理后续开发的入口。
+> I've taken over an Android project. It already has a README and build instructions. Help me set up an entry point for future development.
 
-沿用 README、构建说明和已有 `AGENTS.md`，只补缺失的职责。用现有构建和测试说明拟定验证方式。需求、设计和验证已有材料时，按实际用途建立链接或专题记录。可问「哪些功能需要在指定真机上验收？」
+Reuse the README, build instructions, and any existing `AGENTS.md`, and fill in only the missing roles. Draft the verification approach from the existing build and test instructions. When requirements, design, and verification already have material, create links or topic records according to what they are actually used for. A possible question: "Which features need acceptance testing on a specific physical device?"
 
-### 3. 数据分析与定期报告
+### 3. Data analysis and recurring reports
 
-> 每月要用这些表做经营分析，换个聊天也能知道用哪版数据和怎么算。
+> Every month I use these spreadsheets for a business analysis. I want any new chat to know which version of the data to use and how to calculate things.
 
-导航链接原始数据、已有脚本和历史报告。指标定义、数据日期或输出版本需要反复核对时，提出口径说明或报告索引。进度记录本轮采用的输入、已核验的结果和待核对项。可问「同一月份的汇总表和明细表有出入时，以哪个来源为准？」
+Link the raw data, existing scripts, and past reports from navigation. When metric definitions, data dates, or output versions need repeated checking, propose a definitions document or a report index. Progress records the inputs used this round, the results verified, and the items still to check. A possible question: "When the summary table and the detail table disagree for the same month, which source wins?"
 
-### 4. 团队协作与项目交接
+### 4. Team collaboration and project handover
 
-> 我刚接手一个活动项目，会议纪要、任务表和交付物散在几个目录里。
+> I just took over an event project. Meeting notes, task lists, and deliverables are scattered across several directories.
 
-链接现有任务表、纪要和交付物。用背景说明项目目标和协作方式，用进度列当前卡点和下一步。需要追溯长期决定时，再提出决策记录。可问「目前哪一份任务表是团队正式使用的？重要决定由谁确认？」
+Link the existing task lists, meeting notes, and deliverables. Use the background to explain the project's goals and how the team works together, and use progress to list current blockers and next steps. Propose a decision log only when long-term decisions need to be traceable. A possible question: "Which task list is the one the team officially uses? Who signs off on important decisions?"
 
-### 5. 课程学习与考试准备
+### 5. Coursework and exam preparation
 
-> 我想用这个文件夹准备一门考试，已经有课程大纲、笔记和错题。
+> I want to use this folder to prepare for an exam. I already have the syllabus, notes, and a collection of mistakes.
 
-用背景记录目标、考试范围和时间，导航链接大纲、笔记、题库和错题。只有确实需要时再提出复习计划或错题索引。进度写最近复习内容、掌握证据和下次练习。可问「以哪一版考试大纲为准？」
+Use the background to record the goal, exam scope, and dates, and link the syllabus, notes, question bank, and mistake collection from navigation. Propose a review plan or a mistake index only when it is truly needed. Progress records what was reviewed recently, evidence of mastery, and the next practice session. A possible question: "Which version of the exam syllabus is authoritative?"
 
-### 6. 求职与申请管理
+### 6. Job hunting and application management
 
-> 这里有不同版本的简历、岗位信息和投递截图，想整理好秋招进度。
+> There are several versions of my résumé, job postings, and screenshots of applications here. I want to organize my campus recruitment progress.
 
-沿用已有投递表，导航链接简历版本、岗位资料和投递凭据。进度以可核实记录标注已投递、待确认和下一步。若需要补建投递台账，清单写清要记录的字段。可问「哪份简历是当前版本？哪些投递已有邮件或系统回执？」
+Reuse the existing application tracker, and link résumé versions, job material, and application receipts from navigation. Progress marks applications as submitted, awaiting confirmation, or next step, based on verifiable records. If an application log needs to be created, state in the list which fields it will record. A possible question: "Which résumé is the current version? Which applications have an email or system receipt?"
 
-### 7. 内容创作与视频制作
+### 7. Content creation and video production
 
-> 脚本、素材和几个剪辑版本都在这个目录里，我还要反复修改。
+> Scripts, footage, and several edit versions are all in this directory, and I'll keep revising them.
 
-背景写受众、成品要求和已确认的创作方向。导航链接脚本、原素材和当前预览。素材来源或版本反馈确实需要追踪时，再提出素材清单或反馈记录。可问「现在以哪一版脚本和预览为准？谁来确认成片？」
+The background records the audience, output requirements, and the creative direction already agreed. Navigation links the scripts, raw footage, and current preview. Propose an asset list or a feedback log only when footage sources or version feedback truly need tracking. A possible question: "Which script and preview are current? Who signs off on the final cut?"
 
-### 8. 旅行与个人规划
+### 8. Travel and personal planning
 
-> 有一份行程草案和预算，我想后面继续核对路线和预订。
+> I have a draft itinerary and a budget, and I want to keep checking routes and bookings later.
 
-链接行程和预算原件。背景记录日期、预算上限、限制和已经确定的安排。进度区分已确认、待核实和下一步。确实需要跟踪预订时再提议单独记录。可问「哪些项目已预订，哪些只是备选？」
+Link the original itinerary and budget. The background records dates, the budget ceiling, constraints, and arrangements already settled. Progress distinguishes confirmed items, items to verify, and next steps. Propose a separate record only when bookings truly need tracking. A possible question: "Which items are already booked, and which are only options?"
 
-### 9. 日常运营与流程维护
+### 9. Day-to-day operations and process maintenance
 
-> 我每周都要整理活动报名和复盘，已有表格和一份旧流程说明。
+> Every week I sort out event sign-ups and do a retrospective. I have spreadsheets and an old process document.
 
-沿用现有记录，导航指向当前流程、表格和交付模板。需要固定每周步骤时，提出补充流程说明，进度记录本轮异常和待办。可问「旧流程里哪些步骤仍在使用？每周交付以哪份表格为准？」
+Reuse the existing records, and point navigation to the current process, spreadsheets, and deliverable templates. When the weekly steps need to be fixed, propose a supplementary process document; progress records this round's exceptions and to-dos. A possible question: "Which steps in the old process are still in use? Which spreadsheet is the weekly deliverable based on?"
 
-### 10. 混合型项目
+### 10. Mixed projects
 
-> 这个项目既要做一个 Agent 原型，还要写论文和演示，资料和代码都在一起。
+> This project involves building an agent prototype, writing a paper, and giving a demo, and the material and code are all in one place.
 
-共享一套背景、进度和导航，分别链接研究资料、代码说明、实验记录和演示产物。按材料用途写验证规则，例如论文论断追溯文献或实验，代码改动按测试说明验证，演示记录可用版本。可问「下一阶段优先交原型、实验结果，还是演示稿？」
+Share one set of background, progress, and navigation, and link research material, code documentation, experiment logs, and demo outputs separately. Write verification rules by the purpose of each kind of material: for example, claims in the paper trace back to literature or experiments, code changes are verified according to the test instructions, and demos record a working version. A possible question: "For the next phase, should the prototype, the experiment results, or the demo deck come first?"

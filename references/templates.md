@@ -1,94 +1,94 @@
-# 文档模板
+# Document Templates
 
-新建文档时使用下列最小骨架。沿用或补充已有文件时，只补缺失的小节，不改动原有结构。没有内容的小节写「待补充」或直接省略，不要编造内容。
+Use these minimal skeletons when creating new documents. When reusing or extending an existing file, add only the missing sections and leave the existing structure alone. Write "TBD" in sections that have no content yet, or omit them; never make content up.
 
-下列骨架以中文示例。文档语言不是中文时，把标题、小节名和占位说明都换成文档语言（例如英文工作区写 `# Progress`、`- What changed:`），不要把中文标题原样写入。
+The skeletons are written in English. When the document language is different, write the titles, section names, and placeholders in that language (in a Chinese workspace, for example, `# 当前进度` and `- 修改了什么：`) instead of copying the English headings.
 
-## 默认文件名
+## Default file names
 
-工作区已有命名习惯或用户有偏好时，以那些为准。
+The workspace's existing naming habits and the user's preferences take precedence.
 
-| 职责 | 中文工作区 | 英文工作区 |
+| Role | English workspace | Chinese workspace |
 |---|---|---|
-| 项目规则 | `AGENTS.md` | `AGENTS.md` |
-| Claude Code 接入 | `CLAUDE.md` | `CLAUDE.md` |
-| 项目背景 | `项目背景.md` | `docs/background.md` |
-| 当前进度 | `当前进度.md` | `docs/progress.md` |
-| 文件导航 | `文件导航.md` | `docs/navigation.md` |
-| 进度历史 | `历史归档/进度历史.md` | `archive/progress-history.md` |
+| Project rules | `AGENTS.md` | `AGENTS.md` |
+| Claude Code hookup | `CLAUDE.md` | `CLAUDE.md` |
+| Project background | `docs/background.md` | `项目背景.md` |
+| Current progress | `docs/progress.md` | `当前进度.md` |
+| File navigation | `docs/navigation.md` | `文件导航.md` |
+| Progress history | `archive/progress-history.md` | `历史归档/进度历史.md` |
 
 ## AGENTS.md
 
 ```markdown
-# 项目规则
+# Project Rules
 
-## 开始工作前
-- 先读 [项目背景](项目背景.md) 和 [当前进度](当前进度.md)。
-- 需要找资料时看 [文件导航](文件导航.md)。
+## Before starting work
+- Read the [project background](docs/background.md) and [current progress](docs/progress.md) first.
+- When looking for material, see [file navigation](docs/navigation.md).
 
-## 依据与验证
-- 结论需要的依据：<如文献引用、实验记录、官方文件位置>
-- 验证方式：<如测试命令、真机验收、数据核对步骤>
+## Evidence and verification
+- Evidence required for conclusions: <e.g. citations, experiment logs, location of official documents>
+- How to verify: <e.g. test commands, on-device acceptance, data reconciliation steps>
 
-## 文档更新
-- 每次工作会话结束前，在当前进度最前面加一条记录，写明修改了什么、依据是什么、还缺什么、下一步是什么。
-- 当前进度保留最近 5 条记录。超出的旧记录按时间倒序移到 `<历史文件路径>` 开头，第一次移出时再建立该文件。
-- 项目目标、范围或已确定事项发生变化时，同步更新项目背景。
+## Updating documents
+- Before each work session ends, add an entry at the top of current progress recording what changed, what it was based on, what is still missing, and what comes next.
+- Current progress keeps the 5 most recent entries. Move older entries to the top of `<history file path>`, keeping it newest first; create that file the first time an entry is moved.
+- When the project's goals, scope, or settled items change, update the project background as well.
 
-## 其他约定
-- <用户确认过的补充规则>
+## Other conventions
+- <supplementary rules the user confirmed>
 ```
 
-## CLAUDE.md（Claude Code 接入）
+## CLAUDE.md (Claude Code hookup)
 
-新建时只写一行：
+When creating it, write only one line:
 
 ```markdown
 @AGENTS.md
 ```
 
-已有 `CLAUDE.md` 时，在开头追加同样一行，其余内容不动。
+When a `CLAUDE.md` already exists, add the same line at the top and leave everything else unchanged.
 
-## 项目背景
+## Project background
 
 ```markdown
-# 项目背景
+# Project Background
 
-## 目标
+## Goals
 
-## 范围
-- 包含：
-- 不包含：
+## Scope
+- In scope:
+- Out of scope:
 
-## 当前阶段
+## Current phase
 
-## 已确定事项
-- <事项>（来源：已核实事实 / 用户决定）
+## Settled items
+- <item> (source: verified fact / user decision)
 
-## 待定事项
-- <事项>（助手建议：<建议>，待用户确认）
+## Open items
+- <item> (assistant suggestion: <suggestion>; awaiting user confirmation)
 ```
 
-## 当前进度
+## Current progress
 
 ```markdown
-# 当前进度
+# Current Progress
 
-<!-- 最新在前，保留最近 5 条；更早的记录见 <历史文件路径> -->
+<!-- Newest first; keeps the 5 most recent entries. Older entries are in <history file path>. -->
 
-## YYYY-MM-DD <本次工作的简短标题>
-- 修改了什么：
-- 依据是什么：
-- 还缺什么：
-- 下一步：
+## YYYY-MM-DD <short title for this session>
+- What changed:
+- Based on:
+- Still missing:
+- Next step:
 ```
 
-## 文件导航
+## File navigation
 
 ```markdown
-# 文件导航
+# File Navigation
 
-| 文件或目录 | 内容 | 状态 |
+| File or directory | Contents | Status |
 |---|---|---|
-| [<路径>](<路径>) | <说明> | 当前版本 / 旧版 / 原始材料 |
+| [<path>](<path>) | <description> | current / outdated / original material |
 ```

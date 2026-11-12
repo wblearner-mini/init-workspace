@@ -1,66 +1,66 @@
 ---
 name: init-workspace
-description: 首次为长期项目建立工作文档（背景、进度、导航）和项目级 AGENTS.md，换个聊天也能接着做。适用于空目录或已有项目，例如「帮我整理这个工作区，方便以后接着做」或「第一次打开这个文件夹，帮我建立工作文档」。可显式调用：Claude Code 中用 /init-workspace，Codex 中用 $init-workspace。先只读盘点并给出文件清单，用户确认后再写入。只需要生成代码库说明时，用 Claude Code 自带的 /init；日常进度更新和一次性文件整理也不适用。
+description: First-time setup of working documents (project background, current progress, file navigation) and a project-level AGENTS.md for a long-running project, so any later chat or agent can pick up where the last one left off. Works for empty folders and existing projects, e.g. "organize this workspace so I can keep working on it later" (「帮我整理这个工作区，方便以后接着做」) or "first time opening this folder, set up working docs for it". Invoke explicitly with /init-workspace in Claude Code or $init-workspace in Codex. Takes a read-only inventory and proposes a file list first; writes only after the user confirms. For a plain codebase summary, use Claude Code's built-in /init instead. Not for routine progress updates or one-off file tidying.
 ---
 
-# 初始化工作区
+# Initialize Workspace
 
-分两轮进行。先盘点工作区并给出拟建立的文件清单，用户明确确认清单后再写入项目文件。
+Work in two rounds. First take stock of the workspace and propose a list of files to create. Write project files only after the user explicitly confirms the list.
 
-## 第一步：盘点并提出文件清单
+## Step 1: Take stock and propose a file list
 
-1. **确定目标和用途**。接受用户用日常语言描述文件夹的用途，尽量根据对话和已有资料确定目标工作区和项目用途。只有在因此无法提出清单时才提问，而且列清单前最多问一个简短的阻塞性问题。
-2. **限定盘点范围**。先看目录结构和顶层说明文档，再按需要深入。不遍历依赖目录、构建产物和缓存（如 `node_modules`、`dist`、`build`、`.venv`、`.git`），不打开大型二进制文件。`.env`、密钥、证书、凭据类文件只记录其存在，不读取也不复述其内容。
-3. **检查已有规则和资料**。查找本目录、上级目录和子目录中的 `AGENTS.md`、`CLAUDE.md`，以及全局规则文件（如 `~/.claude/CLAUDE.md`、`~/.codex/AGENTS.md`），再阅读 README 和项目资料。识别哪些文件已经承担下表中的职责，避免新规则与已有规则重复或冲突。保留现有约定和原始材料。需要选择专题文档或拟定项目验证规则时，参考[场景示例](references/scenarios.md)。
-4. **确定语言和命名**。如果存在 `~/.agents/init-workspace-preferences.md`，读取其中的个人默认偏好。该文件是可选的，由使用者自行创建，不随技能提供，格式见技能目录中的 README。不存在时直接跳过。发生冲突时按以下顺序取舍：
-   1. 用户在本次对话中明确提出的要求
-   2. 项目已有的规则
-   3. 工作区现有的语言和命名习惯
-   4. 个人偏好文件
-   5. 本技能的默认做法
+1. **Identify the target and purpose.** Accept the user's everyday description of what the folder is for. Infer the target workspace and the project's purpose from the conversation and existing material where possible. Ask only when you cannot propose a list without the answer, and ask at most one short blocking question before presenting the list.
+2. **Bound the inventory.** Look at the directory structure and top-level documents first, then go deeper only as needed. Do not traverse dependency directories, build outputs, or caches (such as `node_modules`, `dist`, `build`, `.venv`, `.git`), and do not open large binary files. For `.env` files, keys, certificates, and credential files, note only that they exist; never read or repeat their contents.
+3. **Check existing rules and material.** Look for `AGENTS.md` and `CLAUDE.md` in this directory, its parent directories, and its subdirectories, as well as global rule files (such as `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`). Then read the README and project material. Identify which files already fill the roles in the table below, and avoid new rules that duplicate or conflict with existing ones. Keep existing conventions and original material. When choosing topic documents or drafting the project's verification rules, consult the [scenario examples](references/scenarios.md).
+4. **Settle language and naming.** If `~/.agents/init-workspace-preferences.md` exists, read the personal defaults in it. This file is optional, created by the user, and not shipped with the skill; its format is described in the README in the skill directory. Skip it if it does not exist. Resolve conflicts in this order:
+   1. What the user explicitly asks for in the current conversation
+   2. The project's existing rules
+   3. The workspace's existing language and naming habits
+   4. The personal preferences file
+   5. This skill's defaults
 
-   本技能的默认做法：用用户的语言交流。已有工作区的文档沿用工作区语言，新工作区的文档使用用户的语言。交流语言和文档语言不同时，在清单中注明拟采用的文档语言。默认文件名见[文档模板](references/templates.md)。
-5. **列出清单**。用交流语言列出三列表格，列名为「文件或路径」「沿用、补充或新建」「用途及拟写入内容」。写出实际拟采用的文件名，只列有明确用途的项目文件。表格后列出待定事项，只限影响项目范围、验收方式或长期规则的问题，最多三项。每项都用通俗的话给出默认方案，用户不回应时按默认方案执行。常规命名和排版直接写进清单，不单独提问。最后给出简短的确认提示，例如「回复‘按这个来’即可」。
-6. **结束本轮，等待确认**。即使用户初次调用时就要求立即开始，这一轮也保持只读。根据用户的回复处理：
-   - 明确确认（如「按这个来」）：进入第二步。
-   - 只提了修改意见：给出更新后的清单，继续等待。
-   - 要求按具体修改继续（如「按这些改动直接做」）：视为确认修改后的清单，进入第二步。
+   This skill's defaults: talk to the user in the user's language. In an existing workspace, write documents in the workspace's language; in a new workspace, write them in the user's language. When the conversation language and the document language differ, state the planned document language in the list. Default file names are in the [document templates](references/templates.md).
+5. **Present the list.** In the conversation language, show a three-column table whose columns mean "File or path", "Reuse, extend, or create", and "Purpose and planned content". Use the actual file names you plan to use, and list only project files with a clear purpose. After the table, list open questions, limited to ones that affect project scope, acceptance criteria, or long-term rules, and at most three of them. Give each a plain-language default that will be used if the user does not answer it. Put routine naming and formatting directly into the list instead of asking about them. End with a short confirmation prompt, e.g. "Reply 'go ahead' to proceed."
+6. **End the round and wait for confirmation.** Stay read-only in this round, even if the user asked to start immediately when invoking the skill. Handle the reply as follows:
+   - Explicit confirmation (e.g. "go ahead"): move on to Step 2.
+   - Change requests only: present the updated list and keep waiting.
+   - A request to proceed with specific changes (e.g. "make these changes and go"): treat it as confirmation of the revised list and move on to Step 2.
 
-   落地时如果发现还需要增加重要事项，先请用户确认增补项。
+   If, while writing, you find that an important item needs to be added, ask the user to confirm the addition first.
 
-## 选择要建立的文档
+## Choosing the documents
 
-| 职责 | 默认做法 |
+| Role | Default approach |
 |---|---|
-| 项目规则 | 用 `AGENTS.md` 指向项目背景和当前进度，说明需要哪些证据、如何验证，以及何时更新文档。保留已有规则，纳入用户确认的补充要求。 |
-| Claude Code 接入 | Claude Code 启动时只自动读取 `CLAUDE.md`，不读取 `AGENTS.md`。在 Claude Code 中运行或项目已有 `CLAUDE.md` 时，列入此项：没有 `CLAUDE.md` 就新建一个只含 `@AGENTS.md` 一行的文件，已有 `CLAUDE.md` 就在开头追加这一行（已经引入的跳过）。只在 Codex 等直接读取 `AGENTS.md` 的环境中使用时，省略此项。 |
-| 项目背景 | 单独维护一份背景文档，或沿用已有同类文件。写明目标、范围、当前阶段、已确定事项和待定事项，区分已核实事实、用户决定和助手建议。 |
-| 当前进度 | 单独维护一份进度文档，或沿用已有同类文件。每条记录写明「修改了什么、依据是什么、还缺什么、下一步是什么」。首轮写入可核实的项目现状和本次初始化完成的工作。 |
-| 文件导航 | 文件较少时沿用已有 README。资料多到或结构复杂到需要独立索引时，提出新建导航文档。只链接实际存在的资料。 |
+| Project rules | Use `AGENTS.md` to point to the project background and current progress, and to state what evidence is required, how work is verified, and when the documents are updated. Keep existing rules and add the supplementary requirements the user confirmed. |
+| Claude Code hookup | At startup Claude Code loads only `CLAUDE.md` automatically, not `AGENTS.md`. When running in Claude Code, or when the project already has a `CLAUDE.md`, include this item: if there is no `CLAUDE.md`, create one containing the single line `@AGENTS.md`; if there is one, add that line at the top (skip this if it already imports `AGENTS.md`). Omit this item when the project is used only in tools that read `AGENTS.md` directly, such as Codex. |
+| Project background | Maintain a separate background document, or reuse an existing file of the same kind. Record the goals, scope, current phase, settled items, and open items, and distinguish verified facts, user decisions, and assistant suggestions. |
+| Current progress | Maintain a separate progress document, or reuse an existing file of the same kind. Each entry records what changed, what it was based on, what is still missing, and what comes next. The first entry records the verifiable current state of the project and the work done by this initialization. |
+| File navigation | When there are few files, reuse the existing README. When the material is numerous or structured enough to need its own index, propose a new navigation document. Link only to material that actually exists. |
 
-新建文档时按[文档模板](references/templates.md)的骨架编写。文件名跟随项目语言和命名习惯。有明确需求时再提出专题文档。用户提供了较完整的需求时，链接原始材料，或把它保存在专门的文档中。用清楚的语言标记待核实事实和待确认决定。继续采用适用的现有规则，与新规则有实质冲突时请用户确认。
+Write new documents from the skeletons in the [document templates](references/templates.md). File names follow the project's language and naming habits. Propose topic documents only when there is a clear need for them. When the user has provided fairly complete requirements, link to the original material or keep it in a dedicated document. Mark facts awaiting verification and decisions awaiting confirmation in plain language. Keep applicable existing rules, and ask the user when they substantively conflict with new ones.
 
-**进度维护规则**。项目没有既定规则时，按以下默认值处理：
-- 当前进度保留最近 5 条记录，每次工作会话记一条，最新在前。
-- 超过 5 条时，把移出的旧记录按时间倒序放到历史文件开头。
-- 归档目录：工作区用编号目录（如 `01_资料`、`02_草稿`）时按编号规则命名，否则使用不带编号的目录（中文工作区为 `历史归档/进度历史.md`，英文工作区为 `archive/progress-history.md`）。
-- 第一次移出记录时再建立归档目录和历史文件。
+**Progress maintenance rules.** When the project has no established rules, use these defaults:
+- Current progress keeps the 5 most recent entries, one per work session, newest first.
+- When there are more than 5, move the entries that drop off to the top of the history file, so the history also stays newest first.
+- Archive directory: if the workspace uses numbered directories (such as `01_sources`, `02_drafts`), name it according to that numbering scheme; otherwise use an unnumbered directory (`archive/progress-history.md` in an English workspace, `历史归档/进度历史.md` in a Chinese one).
+- Create the archive directory and history file only when the first entry is moved.
 
-有现行约定时沿用，用户另有要求时按其要求执行。把最终采用的规则写入 `AGENTS.md`，并默认写入一条更新规则：每次工作会话结束前，按「修改了什么、依据是什么、还缺什么、下一步是什么」更新当前进度，并按保留规则归档旧记录。
+Follow existing conventions when there are any, and the user's instructions when they ask for something else. Write the final rules into `AGENTS.md`, including this update rule by default: before each work session ends, update current progress with what changed, what it was based on, what is still missing, and what comes next, and archive old entries according to the retention rule.
 
-**需用户明确提出才做的事**。以下事项只有用户明确提出时，才纳入清单：
-- 修改 `CLAUDE.md` 中除引入 `AGENTS.md` 那一行以外的内容
-- 初始化 Git 仓库
-- 更改 `.gitignore`
+**Only when the user explicitly asks.** Include the following in the list only if the user explicitly asks for them:
+- Changing anything in `CLAUDE.md` other than the line that imports `AGENTS.md`
+- Initializing a Git repository
+- Changing `.gitignore`
 
-## 第二步：按清单落地并交接
+## Step 2: Write the files and hand off
 
-1. 在目标工作区按确认后的清单新增或补充文件。复用原始材料和已有项目规则。区分计划开展的工作、已经完成的工作和经过验证的结果。
-2. 核对以下几点：
-   - 导航链接和读取规则指向的文件都实际存在。
-   - 在 Claude Code 中，`CLAUDE.md` 确实引入了 `AGENTS.md`。
-   - 背景与首轮进度内容一致。
-   - 确认过的规则都已写入。
+1. In the target workspace, add or extend files according to the confirmed list. Reuse original material and existing project rules. Distinguish planned work, completed work, and verified results.
+2. Check that:
+   - Every file referenced by navigation links and reading rules actually exists.
+   - In Claude Code, `CLAUDE.md` actually imports `AGENTS.md`.
+   - The background and the first progress entry are consistent.
+   - Every confirmed rule has been written down.
 
-   未来才会用到的归档路径可以先写进规则，不必提前建立。
-3. 告诉用户：新增或补充了哪些文件，还有哪些事项待决定，下一步可以做什么。给一句适合该项目的续接提示，例如「按项目规则继续当前进度里的下一步」。后续工作按项目规则执行，即 `AGENTS.md`，在 Claude Code 中经由 `CLAUDE.md` 引入。
+   Archive paths that will only be used later can be written into the rules now without creating them.
+3. Tell the user which files were added or extended, which items are still open, and what can be done next. Give a one-line prompt suited to the project for resuming later, e.g. "Follow the project rules and continue with the next step in current progress." Later work follows the project rules: `AGENTS.md`, imported through `CLAUDE.md` in Claude Code.
