@@ -33,14 +33,19 @@ Work in two rounds. First take stock of the workspace and propose a list of file
 | Role | Default approach |
 |---|---|
 | Project rules | Use `AGENTS.md` to point to the project background and current progress, and to state what evidence is required, how work is verified, and when the documents are updated. Keep existing rules and add the supplementary requirements the user confirmed. |
-| Claude Code hookup | If the project uses Claude Code and direct loading is unavailable, propose importing `AGENTS.md` from the project's `CLAUDE.md`. Add the import to an existing project file if needed, or propose a new one-line file in the target directory. Use a path relative to the importing file, such as `@AGENTS.md` for files beside each other. |
+| Claude Code hookup | Decide whether to include this item with the host compatibility rules below. When it is included, import `AGENTS.md` from the project's `CLAUDE.md`: add the import to an existing project file, or propose a new one-line file in the target directory. Use a path relative to the importing file, such as `@AGENTS.md` for files beside each other. |
 | Project background | Maintain a separate background document, or reuse an existing file of the same kind. Record the goals, scope, current phase, settled items, and open items, and distinguish verified facts, user decisions, and assistant suggestions. |
 | Current progress | Maintain a separate progress document, or reuse an existing file of the same kind. Each entry records what changed, what it was based on, what is still missing, and what comes next. The first entry records the verifiable current state of the project and the work done by this initialization. |
 | File navigation | When there are few files, reuse the existing README. When the material is numerous or structured enough to need its own index, propose a new navigation document. Link only to material that actually exists. |
 
 Write new documents from the skeletons in the [document templates](references/templates.md). File names follow the project's language and naming habits. Propose topic documents only when there is a clear need for them. When the user has provided fairly complete requirements, link to the original material or keep it in a dedicated document. Mark facts awaiting verification and decisions awaiting confirmation in plain language. Keep applicable existing rules, and ask the user when they substantively conflict with new ones.
 
-**Host compatibility.** Codex discovers this skill in `~/.agents/skills/` (user) or the project's `.agents/skills/`. With default settings in Claude Code v2.1.277 or later, `AGENTS.md` loads directly when there is no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` in the working directory or its ancestors. If one of those files takes precedence or the session does not support direct loading, use the import described above. See the [Codex skill locations](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) and [Claude Code project instructions](https://code.claude.com/docs/en/memory#agentsmd).
+**Host compatibility.** This is the only part of the skill that depends on host versions. When a host changes how it loads instructions, update this list and nothing else.
+- Codex reads `AGENTS.md` directly and discovers this skill in `~/.agents/skills/` (user) or the project's `.agents/skills/` ([Codex skill locations](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills)).
+- Claude Code v2.1.277 or later, with default settings, reads `AGENTS.md` directly only when there is no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` in the working directory or any of its parent directories. Earlier versions, some sessions, and the `claude-md` project instructions setting read only `CLAUDE.md` ([Claude Code project instructions](https://code.claude.com/docs/en/memory#agentsmd)).
+- Include the Claude Code hookup item when the project is used with Claude Code and one of these holds: one of the `CLAUDE.md` files above exists; the session cannot read `AGENTS.md` directly; or you cannot tell the Claude Code version or settings.
+- **Fallback:** whenever you cannot tell whether direct loading applies, propose the import. It does no harm where direct loading works: once a `CLAUDE.md` exists, Claude Code reads it instead of `AGENTS.md`, so the import loads the shared rules exactly once.
+- Omit the hookup item only when the project is used solely with tools that read `AGENTS.md` directly, such as Codex.
 
 **Progress maintenance rules.** When the project has no established rules, use these defaults:
 - Current progress keeps the 5 most recent entries, one per work session, newest first.
@@ -60,7 +65,7 @@ Follow existing conventions when there are any, and the user's instructions when
 1. In the target workspace, add or extend files according to the confirmed list. Reuse original material and existing project rules. Distinguish planned work, completed work, and verified results.
 2. Check that:
    - Every file referenced by navigation links and reading rules actually exists.
-   - If a Claude Code import was part of the confirmed list, its path resolves to the intended `AGENTS.md`.
+   - If the Claude Code hookup was part of the confirmed list, the import path resolves to the intended `AGENTS.md`.
    - The background and the first progress entry are consistent.
    - Every confirmed rule has been written down.
 
