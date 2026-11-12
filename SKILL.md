@@ -11,7 +11,7 @@ Work in two rounds. First take stock of the workspace and propose a list of file
 
 1. **Identify the target and purpose.** Accept the user's everyday description of what the folder is for. Infer the target workspace and the project's purpose from the conversation and existing material where possible. Ask only when you cannot propose a list without the answer, and ask at most one short blocking question before presenting the list.
 2. **Bound the inventory.** Look at the directory structure and top-level documents first, then go deeper only as needed. Do not traverse dependency directories, build outputs, or caches (such as `node_modules`, `dist`, `build`, `.venv`, `.git`), and do not open large binary files. For `.env` files, keys, certificates, and credential files, note only that they exist; never read or repeat their contents.
-3. **Check existing rules and material.** Look for `AGENTS.md` and `CLAUDE.md` in this directory, its parent directories, and its subdirectories, as well as global rule files (such as `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`). Then read the README and project material. Identify which files already fill the roles in the table below, and avoid new rules that duplicate or conflict with existing ones. Keep existing conventions and original material. When choosing topic documents or drafting the project's verification rules, consult the [scenario examples](references/scenarios.md).
+3. **Check existing rules and material.** Look for `AGENTS.md`, `CLAUDE.md`, `.claude/CLAUDE.md`, and `CLAUDE.local.md` in this directory and on the applicable project paths, as well as global rule files (such as `~/.claude/CLAUDE.md` and `~/.codex/AGENTS.md`). Then read the README and project material. Identify which files already fill the roles in the table below, and avoid new rules that duplicate or conflict with existing ones. Keep existing conventions and original material. When choosing topic documents or drafting the project's verification rules, consult the [scenario examples](references/scenarios.md).
 4. **Settle language and naming.** If `~/.agents/init-workspace-preferences.md` exists, read the personal defaults in it. This file is optional, created by the user, and not shipped with the skill; its format is described in the README in the skill directory. Skip it if it does not exist. Resolve conflicts in this order:
    1. What the user explicitly asks for in the current conversation
    2. The project's existing rules
@@ -33,12 +33,14 @@ Work in two rounds. First take stock of the workspace and propose a list of file
 | Role | Default approach |
 |---|---|
 | Project rules | Use `AGENTS.md` to point to the project background and current progress, and to state what evidence is required, how work is verified, and when the documents are updated. Keep existing rules and add the supplementary requirements the user confirmed. |
-| Claude Code hookup | At startup Claude Code loads only `CLAUDE.md` automatically, not `AGENTS.md`. When running in Claude Code, or when the project already has a `CLAUDE.md`, include this item: if there is no `CLAUDE.md`, create one containing the single line `@AGENTS.md`; if there is one, add that line at the top (skip this if it already imports `AGENTS.md`). Omit this item when the project is used only in tools that read `AGENTS.md` directly, such as Codex. |
+| Claude Code hookup | If the project uses Claude Code and direct loading is unavailable, propose importing `AGENTS.md` from the project's `CLAUDE.md`. Add the import to an existing project file if needed, or propose a new one-line file in the target directory. Use a path relative to the importing file, such as `@AGENTS.md` for files beside each other. |
 | Project background | Maintain a separate background document, or reuse an existing file of the same kind. Record the goals, scope, current phase, settled items, and open items, and distinguish verified facts, user decisions, and assistant suggestions. |
 | Current progress | Maintain a separate progress document, or reuse an existing file of the same kind. Each entry records what changed, what it was based on, what is still missing, and what comes next. The first entry records the verifiable current state of the project and the work done by this initialization. |
 | File navigation | When there are few files, reuse the existing README. When the material is numerous or structured enough to need its own index, propose a new navigation document. Link only to material that actually exists. |
 
 Write new documents from the skeletons in the [document templates](references/templates.md). File names follow the project's language and naming habits. Propose topic documents only when there is a clear need for them. When the user has provided fairly complete requirements, link to the original material or keep it in a dedicated document. Mark facts awaiting verification and decisions awaiting confirmation in plain language. Keep applicable existing rules, and ask the user when they substantively conflict with new ones.
+
+**Host compatibility.** Codex discovers this skill in `~/.agents/skills/` (user) or the project's `.agents/skills/`. With default settings in Claude Code v2.1.277 or later, `AGENTS.md` loads directly when there is no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` in the working directory or its ancestors. If one of those files takes precedence or the session does not support direct loading, use the import described above. See the [Codex skill locations](https://learn.chatgpt.com/docs/build-skills#where-codex-loads-local-skills) and [Claude Code project instructions](https://code.claude.com/docs/en/memory#agentsmd).
 
 **Progress maintenance rules.** When the project has no established rules, use these defaults:
 - Current progress keeps the 5 most recent entries, one per work session, newest first.
@@ -58,9 +60,9 @@ Follow existing conventions when there are any, and the user's instructions when
 1. In the target workspace, add or extend files according to the confirmed list. Reuse original material and existing project rules. Distinguish planned work, completed work, and verified results.
 2. Check that:
    - Every file referenced by navigation links and reading rules actually exists.
-   - In Claude Code, `CLAUDE.md` actually imports `AGENTS.md`.
+   - If a Claude Code import was part of the confirmed list, its path resolves to the intended `AGENTS.md`.
    - The background and the first progress entry are consistent.
    - Every confirmed rule has been written down.
 
    Archive paths that will only be used later can be written into the rules now without creating them.
-3. Tell the user which files were added or extended, which items are still open, and what can be done next. Give a one-line prompt suited to the project for resuming later, e.g. "Follow the project rules and continue with the next step in current progress." Later work follows the project rules: `AGENTS.md`, imported through `CLAUDE.md` in Claude Code.
+3. Tell the user which files were added or extended, which items are still open, and what can be done next. Give a one-line prompt suited to the project for resuming later, e.g. "Follow the project rules and continue with the next step in current progress."

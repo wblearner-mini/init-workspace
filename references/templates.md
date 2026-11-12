@@ -41,13 +41,13 @@ The workspace's existing naming habits and the user's preferences take precedenc
 
 ## CLAUDE.md (Claude Code hookup)
 
-When creating it, write only one line:
+When Claude Code needs an import and both files are in the same directory, use this line:
 
 ```markdown
 @AGENTS.md
 ```
 
-When a `CLAUDE.md` already exists, add the same line at the top and leave everything else unchanged.
+Add it at the top of an existing project `CLAUDE.md`, or use it as the only line in a new one. If the importing file is in a different directory, use the relative path from that file.
 
 ## Project background
 
