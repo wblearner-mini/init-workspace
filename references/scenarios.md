@@ -4,7 +4,7 @@ First decide what can be reused based on the current state of the directory, the
 
 ## By the current state of the directory
 
-- **Empty directory.** "This folder is for my graduation thesis from now on. Set it up for me." Based on the goal the user stated, propose background, progress, navigation, and rules. The first progress entry records this initialization and the next step. If the purpose must be clear before you can draft the list, ask only one question.
+- **Empty directory.** "This folder is for my graduation thesis from now on. Set it up for me." Based on the goal the user stated, propose background, progress, known issues (with a "none yet" placeholder), navigation, and rules. The first progress entry records this initialization and the next step. If the purpose must be clear before you can draft the list, ask only one question.
 - **Few files, with an existing README.** "This little tool needs long-term maintenance, and everything is explained in the README." Prefer reusing the README for navigation, and maintain background and progress separately.
 - **Existing rules and records.** "This project has its own rules. Fill in the missing working documents." List which existing rules, background, and progress can be reused. Follow current conventions for retention periods or naming. When the material contains two conflicting versions, ask in the list which one should be treated as authoritative from now on.
 - **Has a CLAUDE.md, but no AGENTS.md.** "This project has always used Claude Code, and the rules are all in CLAUDE.md." Keep the existing rules in `CLAUDE.md`. Propose an `AGENTS.md` that links to the background and progress and adds any missing handoff rules. Add an import of `AGENTS.md` at the top of `CLAUDE.md`, with a path relative to the importing file. If a proposed rule conflicts with an existing one, ask which to follow.
@@ -22,13 +22,13 @@ Keep the original material and the draft's structure, and link the template, lit
 
 > I've taken over an Android project. It already has a README and build instructions. Help me set up an entry point for future development.
 
-Reuse the README, build instructions, and any existing `AGENTS.md`, and fill in only the missing roles. Draft the verification approach from the existing build and test instructions. When requirements, design, and verification already have material, create links or topic records according to what they are actually used for. A possible question: "Which features need acceptance testing on a specific physical device?"
+Reuse the README, build instructions, and any existing `AGENTS.md`, and fill in only the missing roles. Draft the verification approach from the existing build and test instructions. When requirements, design, and verification already have material, create links or topic records according to what they are actually used for. Known issues suits the SDK and toolchain versions the build needs, the physical test devices, and build or runtime errors that took effort to solve, such as obfuscation rules a third-party SDK needs. A possible question: "Which features need acceptance testing on a specific physical device?"
 
 ### 3. Data analysis and recurring reports
 
 > Every month I use these spreadsheets for a business analysis. I want any new chat to know which version of the data to use and how to calculate things.
 
-Link the raw data, existing scripts, and past reports from navigation. When metric definitions, data dates, or output versions need repeated checking, propose a definitions document or a report index. Progress records the inputs used this round, the results verified, and the items still to check. A possible question: "When the summary table and the detail table disagree for the same month, which source wins?"
+Link the raw data, existing scripts, and past reports from navigation. When metric definitions, data dates, or output versions need repeated checking, propose a definitions document or a report index. Progress records the inputs used this round, the results verified, and the items still to check. Known issues suits data quirks that recur every month, such as a column whose meaning changed or a source that exports dates in a different format. A possible question: "When the summary table and the detail table disagree for the same month, which source wins?"
 
 ### 4. Team collaboration and project handover
 

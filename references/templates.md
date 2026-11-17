@@ -14,6 +14,7 @@ The workspace's existing naming habits and the user's preferences take precedenc
 | Claude Code hookup | `CLAUDE.md` | `CLAUDE.md` |
 | Project background | `docs/background.md` | `项目背景.md` |
 | Current progress | `docs/progress.md` | `当前进度.md` |
+| Known issues | `docs/known-issues.md` | `已知问题.md` |
 | File navigation | `docs/navigation.md` | `文件导航.md` |
 | Progress history | `archive/progress-history.md` | `历史归档/进度历史.md` |
 
@@ -23,7 +24,7 @@ The workspace's existing naming habits and the user's preferences take precedenc
 # Project Rules
 
 ## Before starting work
-- Read the [project background](docs/background.md) and [current progress](docs/progress.md) first.
+- Read the [project background](docs/background.md), [current progress](docs/progress.md), and [known issues](docs/known-issues.md) first.
 - When looking for material, see [file navigation](docs/navigation.md).
 
 ## Evidence and verification
@@ -34,6 +35,8 @@ The workspace's existing naming habits and the user's preferences take precedenc
 - Before each work session ends, add an entry at the top of current progress recording what changed, what it was based on, what is still missing, and what comes next.
 - Current progress keeps the 5 most recent entries. Move older entries to the top of `<history file path>`, keeping it newest first; create that file the first time an entry is moved.
 - When the project's goals, scope, or settled items change, update the project background as well.
+- When a problem was not obvious or took real effort to solve, or the environment changed, update known issues before the session ends. Mark resolved pitfalls as resolved instead of deleting them; remove or mark obsolete the ones that no longer apply.
+- Never write keys, passwords, tokens, or credential file contents into any document; record only where they are kept.
 
 ## Other conventions
 - <supplementary rules the user confirmed>
@@ -82,6 +85,28 @@ Add it at the top of an existing project `CLAUDE.md`, or use it as the only line
 - Still missing:
 - Next step:
 ```
+
+## Known issues
+
+```markdown
+# Known Issues
+
+<!-- Long-lived facts and pitfalls. Not archived by count; remove entries that no longer apply. No credentials. -->
+
+## Environment
+- <item>: <value> (verified YYYY-MM-DD; source: <command output / document location>)
+
+## Pitfalls
+
+### <one-line description>
+- Symptom:
+- Cause:
+- Fix or workaround:
+- Status: open / resolved / obsolete
+- Found: YYYY-MM-DD; source:
+```
+
+In an empty workspace, write "None yet." under each section.
 
 ## File navigation
 

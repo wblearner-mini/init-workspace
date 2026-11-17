@@ -1,6 +1,6 @@
 ---
 name: init-workspace
-description: First-time setup of working documents (project background, current progress, file navigation) and a project-level AGENTS.md for a long-running project, so any later chat or agent can pick up where the last one left off. Works for empty folders and existing projects, e.g. "organize this workspace so I can keep working on it later" or "first time opening this folder, set up working docs for it". Invoke explicitly with /init-workspace in Claude Code or $init-workspace in Codex. Takes a read-only inventory and proposes a file list first; writes only after the user confirms. For a plain codebase summary, use Claude Code's built-in /init instead. Not for routine progress updates or one-off file tidying.
+description: First-time setup of working documents (project background, current progress, known issues, file navigation) and a project-level AGENTS.md for a long-running project, so any later chat or agent can pick up where the last one left off. Works for empty folders and existing projects, e.g. "organize this workspace so I can keep working on it later" or "first time opening this folder, set up working docs for it". Invoke explicitly with /init-workspace in Claude Code or $init-workspace in Codex. Takes a read-only inventory and proposes a file list first; writes only after the user confirms. For a plain codebase summary, use Claude Code's built-in /init instead. Not for routine progress updates or one-off file tidying.
 ---
 
 # Initialize Workspace
@@ -32,10 +32,11 @@ Work in two rounds. First take stock of the workspace and propose a list of file
 
 | Role | Default approach |
 |---|---|
-| Project rules | Use `AGENTS.md` to point to the project background and current progress, and to state what evidence is required, how work is verified, and when the documents are updated. Keep existing rules and add the supplementary requirements the user confirmed. |
+| Project rules | Use `AGENTS.md` to point to the project background, current progress, and known issues, and to state what evidence is required, how work is verified, and when the documents are updated. Keep existing rules and add the supplementary requirements the user confirmed. |
 | Claude Code hookup | Decide whether to include this item with the host compatibility rules below. When it is included, import `AGENTS.md` from the project's `CLAUDE.md`: add the import to an existing project file, or propose a new one-line file in the target directory. Use a path relative to the importing file, such as `@AGENTS.md` for files beside each other. |
 | Project background | Maintain a separate background document, or reuse an existing file of the same kind. Record the goals, scope, current phase, settled items, and open items, and distinguish verified facts, user decisions, and assistant suggestions. |
 | Current progress | Maintain a separate progress document, or reuse an existing file of the same kind. Each entry records what changed, what it was based on, what is still missing, and what comes next. The first entry records the verifiable current state of the project and the work done by this initialization. |
+| Known issues | Maintain a separate known-issues document, or reuse an existing file of the same kind (such as a troubleshooting or pitfalls file). It holds what stays true across sessions: an environment section (operating system, toolchain and versions, test devices, external services the project depends on, each with the date and source it was verified against) and a pitfalls section (symptom, cause, fix or workaround, status, and when and from what it was found). Seed it with pitfalls found during the inventory, such as caveats in the README or errors that recur in old progress entries. Propose it even for an empty workspace, with a "none yet" placeholder, so later sessions know where to record problems. |
 | File navigation | When there are few files, reuse the existing README. When the material is numerous or structured enough to need its own index, propose a new navigation document. Link only to material that actually exists. |
 
 Write new documents from the skeletons in the [document templates](references/templates.md). File names follow the project's language and naming habits. Propose topic documents only when there is a clear need for them. When the user has provided fairly complete requirements, link to the original material or keep it in a dedicated document. Mark facts awaiting verification and decisions awaiting confirmation in plain language. Keep applicable existing rules, and ask the user when they substantively conflict with new ones.
@@ -55,6 +56,14 @@ Write new documents from the skeletons in the [document templates](references/te
 
 Follow existing conventions when there are any, and the user's instructions when they ask for something else. Write the final rules into `AGENTS.md`, including this update rule by default: before each work session ends, update current progress with what changed, what it was based on, what is still missing, and what comes next, and archive old entries according to the retention rule.
 
+**Known issues maintenance rules.** When the project has no established rules, write these into `AGENTS.md`:
+- Read known issues before starting work, together with the background and progress.
+- Before a work session ends, add an entry when a problem was not obvious or took real effort to solve, and update the environment section when the environment changed.
+- Do not delete resolved pitfalls; mark them resolved, since they help catch regressions. Mark entries that no longer apply after an environment change as obsolete, or remove them.
+- Known issues are not archived by entry count; keep the document short by removing obsolete entries.
+
+**What never goes into known issues.** Never write keys, passwords, tokens, or the contents of credential files; record only where credentials are kept (for example, "the API key is in the ignored `local.properties`"). If the repository is public or will be published, also leave out private host addresses, account names, and internal URLs.
+
 **Only when the user explicitly asks.** Include the following in the list only if the user explicitly asks for them:
 - Changing anything in `CLAUDE.md` other than the line that imports `AGENTS.md`
 - Initializing a Git repository
@@ -67,6 +76,7 @@ Follow existing conventions when there are any, and the user's instructions when
    - Every file referenced by navigation links and reading rules actually exists.
    - If the Claude Code hookup was part of the confirmed list, the import path resolves to the intended `AGENTS.md`.
    - The background and the first progress entry are consistent.
+   - Known issues contains no credentials, and, for a public repository, no private addresses or account names.
    - Every confirmed rule has been written down.
 
    Archive paths that will only be used later can be written into the rules now without creating them.
